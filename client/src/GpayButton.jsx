@@ -1,8 +1,11 @@
 import React from 'react';
 import axios from 'axios';
 import GooglePayButton from '@google-pay/button-react';
+import { useNavigate } from 'react-router-dom';
 
-export default function GpayButton({ totalAmount, currencyCode, countryCode }) {
+export default function GpayButton({ totalAmount, currencyCode, countryCode, setIsLoading }) {
+
+    const navigate = useNavigate();
 
     return (
         <GooglePayButton
@@ -44,6 +47,7 @@ export default function GpayButton({ totalAmount, currencyCode, countryCode }) {
             onLoadPaymentData={async paymentRequest => {
 
                 try {
+                    setIsLoading(true)
                     // Get the token ID from the payment data
                     const tokenId = JSON.parse(paymentRequest.paymentMethodData.tokenizationData.token).id;
                     // Send the token ID to your server to process the payment
@@ -53,9 +57,13 @@ export default function GpayButton({ totalAmount, currencyCode, countryCode }) {
                         currencyCode: currencyCode,
                     });
 
-                    console.log("Payment processed successfully:", response);
+                    if(response.status == 200){
+                        navigate('/PaymentReviewPage', {state: { data: response.data.paymentIntent}})
+                    }
                 } catch (error) {
                     console.error("Error processing payment:", error);
+                }finally{
+                    setIsLoading(false)
                 }
             }}
 
