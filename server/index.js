@@ -23,11 +23,11 @@ app.post("/api/payment/google-pay", async (req, res) => {
             type: "card", // 'card' is the type for card payments we can use it for Google Pay | Apple Pay | Manual Card details
             card: { token: tokenId }, 
         });
-        //console.log("Payment Method:", paymentMethod);
-
+        // console.log("Payment Method:", paymentMethod);
+        // console.log(totalAmount * 100)
         // 2. Create a PaymentIntent with the PaymentMethod
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: totalAmount , // amount in cents
+            amount: totalAmount * 100, // need to amount in cents  amount * 100
             currency: currencyCode,
             payment_method: paymentMethod.id,
             automatic_payment_methods: {
@@ -36,14 +36,14 @@ app.post("/api/payment/google-pay", async (req, res) => {
             }
         });
 
-        console.log("Payment Intent:", paymentIntent);
+        //console.log("Payment Intent:", paymentIntent);
 
         // 3. Confirm the PaymentIntent
         const confirmedPI = await stripe.paymentIntents.confirm(paymentIntent.id, {
             payment_method: paymentMethod.id,
         });
 
-        console.log("Confirmed Payment Intent:", confirmedPI);
+        //console.log("Confirmed Payment Intent:", confirmedPI);
         res.status(200).json({ success: true, paymentIntent: confirmedPI });
 
 

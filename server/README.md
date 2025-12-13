@@ -12,5 +12,6 @@
 ```
 SECRETKEY= stripe secret key
 PORT= node server port
-FRONTEND_URL= frontend url to aviod hardcoding 
+FRONTEND_URL= #for cors only expectd values  #localhost url http://localhost:5173 | docker env http://localhost:8082 | prod cloud run frontend url
+
 ```

@@ -1,0 +1,25 @@
+# Based image
+FROM node:20-alpine
+
+# Set working dir
+WORKDIR /server
+
+# Copy package*.json file first
+COPY ./package.json ./package-lock.json ./
+
+# install pakages
+RUN npm install
+
+# copy the rest of application
+COPY ./ ./
+
+# Cloud Run always sets the $PORT environment variable.
+# Your Express app MUST listen on this port (not a hardcoded one like 3000 or 8080).
+# Add an ENV instruction for documentation, though your code should handle the $PORT variable.
+ENV PORT 8080
+
+# Expose the port your server will listen on
+EXPOSE 8080
+
+# command to start our application
+CMD [ "node" , "index.js"]

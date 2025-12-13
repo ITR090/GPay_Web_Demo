@@ -51,7 +51,7 @@ export default function GpayButton({ totalAmount, currencyCode, countryCode, set
                     // Get the token ID from the payment data
                     const tokenId = JSON.parse(paymentRequest.paymentMethodData.tokenizationData.token).id;
                     // Send the token ID to your server to process the payment
-                    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/payment/google-pay`, {
+                    const response = await axios.post(`${import.meta.env.VITE_CLOUDRUN_BACKEND_URL}/api/payment/google-pay`, {
                         tokenId: tokenId,
                         totalAmount: totalAmount,
                         currencyCode: currencyCode,

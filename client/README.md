@@ -14,6 +14,7 @@
 # Create .env file under client folder which have the below values:
 
 ```
-VITE_STRIPE_PUBLISHABLEKEY= stripe public key
-VITE_BACKEND_URL= your backend url
+VITE_STRIPE_PUBLISHABLEKEY=
+VITE_BACKEND_URL=http://localhost:8081  #in localhost env its 8080 | docker its 8081
+VITE_CLOUDRUN_BACKEND_URL= your backend cloud run url #only for prod
 ```
